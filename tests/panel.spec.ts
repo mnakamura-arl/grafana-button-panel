@@ -7,7 +7,14 @@ test('should display the provisioned buttons', async ({ gotoPanelEditPage, readP
   await expect(panelEditPage.panel.locator.getByRole('button', { name: 'Stop' })).toBeVisible();
 });
 
-test('should display a default button when the panel is newly added', async ({ panelEditPage }) => {
+// Switches a provisioned placeholder panel instead of using the panelEditPage fixture, whose
+// add-panel flow waits for a "Configure" button that Grafana 13.2+ doesn't always render.
+test('should display a default button when the panel is newly added', async ({
+  gotoPanelEditPage,
+  readProvisionedDashboard,
+}) => {
+  const dashboard = await readProvisionedDashboard({ fileName: 'dashboard.json' });
+  const panelEditPage = await gotoPanelEditPage({ dashboard, id: '3' });
   await panelEditPage.setVisualization('Button Panel');
   await expect(panelEditPage.panel.locator.getByRole('button', { name: 'Button' })).toBeVisible();
 });
