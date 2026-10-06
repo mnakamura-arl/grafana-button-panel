@@ -71,6 +71,21 @@
       },
       "title": "Vertical Buttons",
       "type": "speakyourcode-button-panel"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "content": "Placeholder panel used by e2e tests.",
+        "mode": "markdown"
+      },
+      "title": "Placeholder",
+      "type": "text"
     }
   ],
   "refresh": "",
