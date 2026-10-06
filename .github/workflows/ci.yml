@@ -204,7 +204,18 @@ jobs:
         run: |
           docker logs speakyourcode-button-panel >& grafana-server.log
 
+      - name: Upload e2e test results
+        uses: actions/upload-artifact@v7
+        if: ${{ always() && steps.run-tests.outcome == 'failure' }}
+        with:
+          name: playwright-report-${{ matrix.GRAFANA_IMAGE.NAME }}-v${{ matrix.GRAFANA_IMAGE.VERSION }}-${{github.run_id}}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 5
+
       - name: Stop grafana docker
+        if: ${{ always() }}
         run: docker compose down
 
       # Uncomment this step to upload the server log to Github artifacts. Remember Github artifacts are public on the Internet if the repository is public.
